@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.compatibility_mode = "2.0"
-    ansible.playbook = "playbook.yml"
+    ansible.playbook = "raspberry.yml"
     ansible.inventory_path = "testing/inventory"
     ansible.limit = "all"
     #ansible.verbose = "vvv"
