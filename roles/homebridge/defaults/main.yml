@@ -1,0 +1,9 @@
+---
+
+homebridge_dir: /var/homebridge
+homebridge_bin: "/usr/local/bin/node/homebridge"
+homebridge_defaults: /etc/default/homebridge
+
+homebridge_name: "homebridge"
+homebridge_port: "51826"
+homebridge_pin: "021-25-152"

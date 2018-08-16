@@ -1,0 +1,7 @@
+---
+
+- name: restart homebridge
+  become: yes
+  service:
+    name: homebridge
+    state: restarted

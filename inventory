@@ -1,0 +1,14 @@
+raspi-zero ansible_host=192.168.178.25
+raspi ansible_host=192.168.178.26
+
+[all:vars]
+environment=production
+
+[raspberries]
+raspi-zero
+raspi
+
+[raspberries:vars]
+ansible_connection=ssh
+ansible_ssh_user=pi
+ansible_ssh_pass=raspberry

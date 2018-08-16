@@ -1,0 +1,7 @@
+---
+
+- name: install some plugins
+  npm: name={{ item }} global=true
+  with_items:
+    - homebridge-hue
+  notify: restart homebridge

@@ -1,0 +1,41 @@
+---
+
+# Credits go to https://github.com/rasputnik/ansible-homebridge
+- name: install homebridge dependencies
+  become: yes
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - libavahi-compat-libdnssd-dev
+    - git
+
+- name: install homebridge via npm
+  become: yes
+  command: npm install -g --unsafe-perm homebridge
+
+- name: add homebridge user
+  become: yes
+  user:
+    name: homebridge
+    home: "{{ homebridge_dir }}"
+    createhome: yes
+    comment: "HomeBridge"
+
+- name: add systemd unit and EnvFile
+  become: yes
+  template:
+    src: ".{{ item }}.j2"
+    dest: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0444
+  with_items:
+    - "{{ homebridge_defaults }}"
+    - /etc/systemd/system/homebridge.service
+  notify: restart homebridge
+
+- name: start homebridge
+  service:
+    name: homebridge
+    state: started
+    enabled: yes

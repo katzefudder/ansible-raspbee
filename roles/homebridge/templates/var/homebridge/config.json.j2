@@ -1,0 +1,22 @@
+{
+    "bridge": {
+        "name": "{{ homebridge_name }}",
+        "username": "CC:11:4D:E3:CF:29",
+        "port": "{{ homebridge_port }}",
+        "pin": "{{ homebridge_pin }}"
+    },
+    "accessories":  [],
+    "platforms": [
+        {
+            "platform": "Hue",
+            "name": "Hue",
+            "host": "raspbee",
+            "users": {
+                "00212EFFFF00B80C": "C8C688BE16"
+            },
+            "lights": true,
+            "sensors": true,
+            "nativeHomeKitlights": false
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+- hosts: raspberries
+  become: yes
+  roles:
+    - basic
+    - deconz
+    - nodejs
+    - homebridge

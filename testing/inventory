@@ -1,0 +1,12 @@
+raspbee ansible_host=192.168.33.33
+
+[all:vars]
+environment=testing
+
+[raspberries]
+raspbee
+
+[raspberries:vars]
+ansible_connection=ssh
+ansible_ssh_user=vagrant
+ansible_ssh_pass=

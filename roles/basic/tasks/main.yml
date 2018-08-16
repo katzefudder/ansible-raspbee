@@ -1,0 +1,23 @@
+---
+- name: configure hostname
+  hostname: name="{{ inventory_hostname }}"
+
+- name: install basic packages
+  become: yes
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+  with_items:
+    - apt-transport-https
+    - build-essential
+    - lxde-core
+    - lightdm
+    - xserver-xorg
+    - realvnc-vnc-server
+
+- name: enable autologin for pi user on lightdm
+  copy:
+    src: files/lightdm.conf
+    dest: /etc/lightdm/lightdm.conf
+    owner: root
+    group: root
