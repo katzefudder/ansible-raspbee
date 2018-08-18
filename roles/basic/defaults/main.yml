@@ -1,0 +1,10 @@
+---
+
+# set global locale (default en_US.UTF-8)
+raspi_config_locale: de_DE.UTF-8
+
+# set timezone
+raspi_config_timezone: UTC
+
+# ensure camera support is on - CURRENTLY UNVERIFIED
+raspi_config_enable_camera: no

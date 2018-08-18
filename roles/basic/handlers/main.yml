@@ -1,0 +1,12 @@
+---
+
+- name: dpkg-reconfigure tzdata
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+
+- name: dpkg-reconfigure locales
+  command: dpkg-reconfigure locales
+
+- name: restart display manager
+  service:
+    name: display-manager
+    state: restarted
