@@ -73,3 +73,5 @@
 #    dest: /home/pi/.local/share/data/dresden-elektronik/deCONZ/config.ini
 #    regexp: /port=8080/
 #    replace: 'port=8081'
+
+- include: templates.yml

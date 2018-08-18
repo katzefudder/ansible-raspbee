@@ -2,3 +2,4 @@
 
 deconz_packages:
   'deconz': 'http://www.dresden-elektronik.de/rpi/deconz/deconz-latest.deb'
+deconz_port: 8081

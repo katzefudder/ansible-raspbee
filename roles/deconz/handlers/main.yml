@@ -1,0 +1,6 @@
+---
+
+- name: restart deconz
+  service:
+    name: deconz
+    state: restarted

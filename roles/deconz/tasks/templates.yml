@@ -1,0 +1,67 @@
+---
+
+- name: deconz service
+  template:
+    src: deconz.service.j2
+    dest: /etc/systemd/system/deconz.service
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+  - restart deconz
+
+- name: deconz gui service
+  template:
+    src: deconz-gui.service.j2
+    dest: /etc/systemd/system/deconz-gui.service
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+  - restart deconz
+
+- name: deconz init service
+  template:
+    src: deconz-init.service.j2
+    dest: /etc/systemd/system/deconz-init.service
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+  - restart deconz
+
+- name: deconz update service
+  template:
+    src: deconz-update.service.j2
+    dest: /etc/systemd/system/deconz-update.service
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+  - restart deconz
+
+- name: deconz homebridge service
+  template:
+    src: deconz-homebridge.service.j2
+    dest: /etc/systemd/system/deconz-homebridge.service
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+  - restart deconz
+
+- name: deconz wifi service
+  template:
+    src: deconz-wifi.service.j2
+    dest: /etc/systemd/system/deconz-wifi.service
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+  - restart deconz
