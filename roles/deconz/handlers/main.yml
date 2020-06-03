@@ -1,5 +1,10 @@
 ---
 
+- name: start deconz
+  service:
+    name: deconz
+    state: started
+
 - name: restart deconz
   service:
     name: deconz
