@@ -1,7 +1,7 @@
-raspbee ansible_host=192.168.33.33
+raspbee ansible_host=192.168.33.33 motion=true graphite=true
 
 [all:vars]
-environment=testing
+stage=testing
 
 [raspberries]
 raspbee
@@ -10,3 +10,6 @@ raspbee
 ansible_connection=ssh
 ansible_ssh_user=vagrant
 ansible_ssh_pass=
+graphite=false
+motion=false
+deconz=false
