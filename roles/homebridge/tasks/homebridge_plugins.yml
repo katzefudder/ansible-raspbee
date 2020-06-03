@@ -4,4 +4,5 @@
   npm: name={{ item }} global=true
   with_items:
     - homebridge-hue
+    - homebridge-config-ui-x
   notify: restart homebridge

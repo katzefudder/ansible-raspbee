@@ -1,4 +1,4 @@
 ---
 
-- include: homebridge.yml
-- include: homebridge_plugins.yml
+- include: install.yml
+  when: deconz

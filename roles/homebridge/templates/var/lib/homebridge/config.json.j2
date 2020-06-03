@@ -10,13 +10,23 @@
         {
             "platform": "Hue",
             "name": "Hue",
-            "host": "raspbee",
+            "host": "127.0.0.1:8081",
             "users": {
                 "00212EFFFF00B80C": "C8C688BE16"
             },
             "lights": true,
             "sensors": true,
             "nativeHomeKitlights": false
+        },
+        {
+          "platform": "config",
+          "name": "Config",
+          "port": "{{ homebridge_ui_port }}",
+          "sudo": true,
+          "log": {
+              "method": "systemd",
+              "service": "homebridge"
+          }
         }
     ]
 }
