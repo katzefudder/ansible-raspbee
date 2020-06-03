@@ -1,0 +1,8 @@
+--------------------------------------------------------------------------
+  Katzefudder Industries - This system is managed by Ansible
+--------------------------------------------------------------------------
+  Default IP/GW:  {{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.gateway }}
+  Cores:          {{ ansible_processor_vcpus }}
+  RAM:            {{ (ansible_memtotal_mb / 1000) | round(1) }}GB
+  Platform:       {{ ansible_product_name }}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

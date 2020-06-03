@@ -1,0 +1,9 @@
+---
+
+  - name: Copy motd.tail
+    template: src=motd.tail.j2 dest=/etc/motd.tail owner=root group=root mode=0644
+    tags: motd
+
+  - name: Enable motd
+    command: cp -rf /etc/motd.tail /etc/motd
+    tags: motd
