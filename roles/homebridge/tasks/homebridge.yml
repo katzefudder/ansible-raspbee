@@ -21,6 +21,15 @@
     createhome: yes
     comment: "HomeBridge"
 
+- name: Add user "homebridge" to sudo
+  lineinfile:
+    path: /etc/sudoers.d/homebridge
+    line: 'homebridge ALL=(ALL) NOPASSWD: ALL'
+    state: present
+    mode: 0440
+    create: yes
+    validate: 'visudo -cf %s'
+
 - name: add systemd unit and EnvFile
   become: yes
   template:
