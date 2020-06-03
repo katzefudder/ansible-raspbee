@@ -1,0 +1,4 @@
+---
+
+- include: homebridge.yml
+- include: homebridge_plugins.yml
