@@ -1,0 +1,76 @@
+---
+
+- name: install motion packages
+  become: yes
+  apt:
+    pkg:
+      - screen
+      - motion
+      - ffmpegthumbnailer
+    state: present
+
+- name: Setup camera
+  lineinfile:
+      path: /etc/modules
+      state: present
+      line: bcm2835_v4l2
+
+- name: Create recording directory
+  file:
+      path: /home/pi/motion
+      state: directory
+      owner: motion
+      group: motion
+      mode: 0775
+
+- name: Add motion configuration
+  template:
+      src: templates/motion.conf.j2
+      owner: root
+      group: root
+      dest: /etc/motion/motion.conf
+
+- name: Add motion camera configuration
+  template:
+    src: templates/camera1.conf.j2
+    owner: root
+    group: root
+    dest: /etc/motion/camera1.conf
+
+- name: Add motion start script
+  template:
+      src: templates/start.sh.j2
+      dest: /home/pi/start.sh
+      group: pi
+      owner: pi
+      mode: 0550
+
+- name: Cron for motion on boot
+  cron:
+      name: "Start motion on boot"
+      special_time: reboot
+      user: pi
+      job: "/bin/bash /home/pi/start.sh"
+
+- name: Cron to restart motion if not started
+  cron:
+      name: "Verify that motion is started"
+      minute: "*/1"
+      user: pi
+      job: "/bin/bash /home/pi/start.sh"
+
+- name: Cron for clearing 7 days old recordings
+  cron:
+      name: "Clear old alarm files"
+      minute: "*/1"
+      user: pi
+      job: find /home/pi/motion/* -mtime +7 -exec rm {} \; >/dev/null 2>&
+
+- name: Create logfile
+  file:
+      path: /var/log/motion.log
+      state: file
+      owner: motion
+      group: motion
+      mode: 0777
+  become: yes

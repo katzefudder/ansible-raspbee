@@ -1,0 +1,25 @@
+---
+
+motion_live_port: 8080
+motion_webcontrol_port: 8081
+motion_daemon: on
+motion_stream_localhost: off
+motion_webcontrol_localhost: off
+motion_videodevice: /dev/video0
+
+motion_jpg_quality: 88
+motion_ffmpeg_timelapse: 10
+motion_snapshot_interval: 60
+motion_live_user: pi
+motion_live_password: raspberry
+motion_log_level: 7
+motion_log_file: /var/log/motion.log
+motion_target_dir: /home/pi/motion/
+motion_ffmpeg_video_codec: mov
+
+# resolution
+motion_width: 1024
+motion_height: 768
+motion_framerate: 24
+
+motion_rotate: 270
