@@ -1,51 +1,15 @@
 ---
-- name: configure hostname
-  hostname: name="{{ inventory_hostname }}"
 
-- name: set timezone variables
-  template:
-    src: timezone.j2
-    dest: /etc/timezone
-    owner: root
-    group: root
-    mode: 0644
-    backup: yes
-  notify:
-  - dpkg-reconfigure tzdata
+- debug:
+    msg: "Install deCONZ"
+  when: deconz
 
-- name: set locale
-  template:
-    src: locale.j2
-    dest: /etc/default/locale
-    owner: root
-    group: root
-    mode: 0644
-    backup: yes
-  notify:
-  - dpkg-reconfigure locales
+- debug:
+    msg: "Install Graphite"
+  when: graphite
 
-- name: install basic packages
-  become: yes
-  apt:
-    update_cache: yes
-    name: "{{ item }}"
-  with_items:
-    - apt-transport-https
-    - build-essential
-    - lxde-core
-    - lightdm
-    - xserver-xorg
+- debug:
+    msg: "Install motion webcam"
+  when: motion
 
-- name: deactivate screensaver
-  lineinfile:
-    path: /etc/X11/Xresources/x11-common
-    line: 'xscreensaver.mode: blank'
-  notify:
-  - restart display manager
-
-- name: enable autologin for pi user on lightdm
-  copy:
-    src: files/lightdm.conf
-    dest: /etc/lightdm/lightdm.conf
-    owner: root
-    group: root
+- include: install.yml

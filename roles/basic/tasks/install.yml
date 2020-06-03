@@ -1,0 +1,94 @@
+---
+- name: configure hostname
+  hostname: name="{{ inventory_hostname }}"
+
+- name: set timezone variables
+  template:
+    src: timezone.j2
+    dest: /etc/timezone
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+  - dpkg-reconfigure tzdata
+
+- name: set locale
+  template:
+    src: locale.j2
+    dest: /etc/default/locale
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+  - dpkg-reconfigure locales
+
+- name: install basic packages
+  become: yes
+  apt:
+    pkg:
+      - apt-transport-https
+      - build-essential
+      - lxde-core
+      #- lightdm
+      - python-pip
+      - python-dev
+      - vim
+      #- xserver-xorg
+    state: present
+    update_cache: yes
+
+#- name: deactivate screensaver
+#  lineinfile:
+#    path: /etc/X11/Xresources/x11-common
+#    line: 'xscreensaver.mode: blank'
+#  notify:
+#  - restart display manager
+
+#- name: enable autologin for pi user on lightdm
+#  copy:
+#    src: files/lightdm.conf
+#    dest: /etc/lightdm/lightdm.conf
+#    owner: root
+#    group: root
+
+- name: Ensure group "pi" exists
+  group:
+    name: pi
+    state: present
+
+- name: Ensure user "pi" exists
+  user:
+    name: pi
+    shell: /bin/bash
+    group: pi
+    state: present
+
+- name: deploy ssh key
+  authorized_key:
+    user: pi
+    state: present
+    key: "{{ lookup('file', '{{ role_path }}/files/id_rsa.pub') }}"
+
+- name: change default password for user pi
+  user:
+    name: pi
+    password: ""
+
+- name: Add some shortcuts to .bashrc
+  blockinfile:
+    path: /etc/bash.bashrc
+    block: |
+      # some more ls aliases
+      alias ll='ls -l'
+      alias la='ls -A'
+      alias l='ls -CF'
+      alias tailf='tail -f'
+      
+#- name: Run kernel upgrade (this can take up to 10 minutes)
+#  command: /usr/bin/rpi-update
+#  environment:
+#    SKIP_WARNING: 1
+#  tags:
+#    - system-upgrade
