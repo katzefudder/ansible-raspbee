@@ -1,14 +1,26 @@
-raspi-zero ansible_host=192.168.178.25
-raspi ansible_host=192.168.178.26
+# graphite motion deconz
+
+raspi-zero ansible_host=192.168.178.25 graphite=true
+raspi-zero-camera ansible_host=192.168.178.42 motion=true samba=true
+raspi ansible_host=192.168.178.29 deconz=true
+raspi_old_1 ansible_host=192.168.178.36
+raspbee ansible_host=192.168.178.30 deconz=true
 
 [all:vars]
-environment=production
+stage=production
 
 [raspberries]
 raspi-zero
+raspi-zero-camera
 raspi
+raspbee
+raspi_old_1
 
 [raspberries:vars]
 ansible_connection=ssh
 ansible_ssh_user=pi
 ansible_ssh_pass=raspberry
+graphite=false
+motion=false
+deconz=false
+samba=false

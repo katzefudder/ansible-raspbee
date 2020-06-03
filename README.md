@@ -5,8 +5,12 @@ I use a Raspberry for home automation. Because I love automation, I want to have
 For testing and development, I use [Vagrant](http://vagrantup.com) a lot. Although Vagrant, respectively [VirtualBox](https://www.virtualbox.org) does not support ARM architectures, "cross compiling" to a Debian Jessie running on VirtualBox seems viable to me.
 
 ## Install tools and all dependencies
+### Run Playbook on each available hosts 
 To execute the playbook on each and every Raspberry, simply run
 `ansible-playbook -i inventory raspberry.yml`
+
+### Run Playbook on one host
+`ansible-playbook -i inventory --limit raspi raspberry.yml`
 
 ### deCONZ
 Control [zigbee](https://www.dresden-elektronik.de/funktechnik/products/software/pc/deconz/) compatible networks

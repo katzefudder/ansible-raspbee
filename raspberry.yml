@@ -1,7 +1,14 @@
-- hosts: raspberries
+- name: Install Raspberries
+  hosts: raspberries
+  #vars_files:
+  #  - "{{ vaultfile }}"
   become: yes
   roles:
     - basic
+    - motd
+    - motion
+    - samba
     - deconz
     - nodejs
     - homebridge
+    - graphite
