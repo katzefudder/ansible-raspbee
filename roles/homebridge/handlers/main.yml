@@ -1,5 +1,11 @@
 ---
 
+- name: start homebridge
+  become: yes
+  service:
+    name: homebridge
+    state: started
+
 - name: restart homebridge
   become: yes
   service:
