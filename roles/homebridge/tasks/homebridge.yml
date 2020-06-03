@@ -34,6 +34,16 @@
     - /etc/systemd/system/homebridge.service
   notify: restart homebridge
 
+- name: add homebridge config.json
+  become: yes
+  template:
+    src: "./var/lib/homebridge/config.json.j2"
+    dest: "/var/lib/homebridge/config.json"
+    owner: homebridge
+    group: homebridge
+    mode: 0444
+  notify: restart homebridge
+
 - name: start homebridge
   service:
     name: homebridge
