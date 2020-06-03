@@ -18,6 +18,7 @@ Vagrant.configure("2") do |config|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "raspberry.yml"
     ansible.inventory_path = "testing/inventory"
+    ansible.extra_vars = {vaultfile: 'vaults/testing.yml'}
     ansible.limit = "all"
     #ansible.verbose = "vvv"
   end
