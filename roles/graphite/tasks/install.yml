@@ -1,0 +1,78 @@
+---
+- name: installing packages
+  apt: name={{ item }} state=present
+  with_items:
+    - graphite-web
+    - graphite-carbon
+    - apache2
+    - libapache2-mod-wsgi
+
+- name: install apache modules
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - proxy
+    - proxy_http
+    - expires
+    - deflate
+    - rewrite
+    - ssl
+
+- name: removing default apache config
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+  notify: restart apache2
+
+#- name: adding graphite apache config
+#  file: src=/usr/share/graphite-web/apache2-graphite.conf dest=/etc/apache2/sites-enabled/apache2-graphite.conf state=link
+#  notify: restart apache2
+
+- name: Create ports.conf
+  template:
+    src=templates/etc/apache2/ports.conf.j2
+    dest=/etc/apache2/ports.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart apache2
+
+- name: Create graphite vhost
+  template:
+    src=templates/etc/apache2/apache2-graphite.conf.j2
+    dest=/etc/apache2/sites-enabled/apache2-graphite.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart apache2
+
+- name: Configure Graphite Web
+  template: src=local_settings.py.j2
+            dest=/usr/share/graphite-web/local_settings.py
+
+- name: Install Django
+  command: pip install "Django>=1.9,<1.9.99"
+
+- name: checking if graphite db is initialized
+  stat: path=/var/log/graphite_db_initialized
+  register: graphite_db_init
+
+- name: initializing db
+  command: "python /usr/lib/python2.7/dist-packages/graphite/manage.py migrate --settings=graphite.settings --run-syncdb --noinput"
+  when: graphite_db_init.stat.exists != true
+
+- name: defining graphite db initialized
+  file: path=/var/log/graphite_db_initialized state=touch
+  when: graphite_db_init.stat.exists != true
+
+- name: changing owner on graphite.db
+  file: path=/var/lib/graphite/graphite.db owner=_graphite group=_graphite
+
+- name: enabling carbon-cache
+  template: src=etc/default/graphite-carbon.j2 dest=/etc/default/graphite-carbon owner=root group=root mode=0644
+  notify: restart carbon-cache
+  when: enable_carbon_cache
+
+- name: defining storage schemas
+  template: src=etc/carbon/storage-schemas.conf.j2 dest=/etc/carbon/storage-schemas.conf owner=root group=root mode=0644
+  notify: restart carbon-cache
+  when: enable_carbon_cache

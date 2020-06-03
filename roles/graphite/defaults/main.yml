@@ -1,0 +1,5 @@
+---
+
+# defaults file for ansible-graphite
+enable_carbon_cache: true
+graphite_web_secret_key: "a12sdf"
