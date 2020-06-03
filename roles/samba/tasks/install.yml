@@ -1,0 +1,20 @@
+---
+
+- name: installing packages
+  apt: 
+    pkg:
+      - samba
+    state: present
+
+- name: removing default samba config
+  file: path=/etc/samba/smb.conf state=absent
+  notify: restart samba
+
+- name: Create smb.conf
+  template:
+    src=templates/smb.conf.j2
+    dest=/etc/samba/smb.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart samba

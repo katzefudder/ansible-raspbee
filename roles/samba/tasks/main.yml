@@ -1,0 +1,5 @@
+---
+
+# tasks file for Samba
+- include: install.yml
+  when: samba

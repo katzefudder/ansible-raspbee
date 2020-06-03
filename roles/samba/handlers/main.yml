@@ -1,0 +1,6 @@
+---
+
+- name: restart samba
+  systemd:
+    state: started
+    name: smbd

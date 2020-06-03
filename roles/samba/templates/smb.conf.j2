@@ -1,0 +1,20 @@
+[global]
+workgroup = smb
+security = user
+map to guest = Bad Password
+
+[homes]
+comment = Home Directories
+browsable = no
+read only = no
+create mode = 0750
+
+[public]
+path = /home/pi/motion
+public = yes
+writable = yes
+comment = motion share
+printable = no
+guest ok = yes
+follow symlinks = yes
+wide links = yes
