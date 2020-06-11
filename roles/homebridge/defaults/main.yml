@@ -8,4 +8,4 @@ homebridge_name: "homebridge"
 homebridge_port: "51826"
 homebridge_pin: "021-25-152"
 
-homebridge_ui_port: 8581
+homebridge_ui_port: 8080
