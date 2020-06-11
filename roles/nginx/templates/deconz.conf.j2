@@ -1,0 +1,20 @@
+upstream homebridge-ui {
+    server 127.0.0.1:8581;
+}
+
+server {
+    listen 80;
+
+    server_name raspi.fritz.box;
+
+    access_log /var/log/nginx/raspi.access.log;
+     error_log /var/log/nginx/raspi.error.log;
+
+    location / {
+        proxy_pass http://127.0.0.1:8081;
+    }
+
+    location /api {
+        proxy_pass http://127.0.0.1:8081/api;
+    }
+}

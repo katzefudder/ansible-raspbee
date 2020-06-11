@@ -1,0 +1,38 @@
+---
+
+- name: install nginx
+  become: yes
+  apt:
+    pkg:
+      - nginx
+    state: present
+
+- name: Disable the default site
+  file:
+    path: "{{ nginx_conf_dir }}/sites-enabled/default"
+    state: absent
+  notify:
+    - reload nginx
+
+
+- name: Copy the nginx configuration file
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_conf_dir }}/nginx.conf"
+  notify:
+    - restart nginx
+
+- name: Create the configuration for deconz
+  template:
+    src: "deconz.conf.j2"
+    dest: "{{ nginx_conf_dir }}/sites-available/deconz.conf"
+  notify:
+    - reload nginx
+
+- name: Create symlinks for sites-enabled
+  file:
+    state: link
+    src: "{{ nginx_conf_dir }}/sites-available/deconz.conf"
+    dest: "{{ nginx_conf_dir }}/sites-enabled/deconz.conf"
+  notify:
+    - reload nginx
