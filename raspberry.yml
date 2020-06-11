@@ -12,3 +12,4 @@
     - nodejs
     - homebridge
     - graphite
+    - nginx
