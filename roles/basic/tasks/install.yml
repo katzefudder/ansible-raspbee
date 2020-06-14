@@ -35,6 +35,7 @@
       - python-pip
       - python-dev
       - vim
+      - dnsutils
       #- xserver-xorg
     state: present
     update_cache: yes
