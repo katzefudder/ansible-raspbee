@@ -1,0 +1,9 @@
+---
+
+- debug:
+    msg: "Install dnsmasq"
+  when: dnsmasq
+
+- include: install.yml
+  when: dnsmasq
+  tags: dnsmasq

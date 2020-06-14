@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+domain-needed
+bogus-priv
+expand-hosts
+
+listen-address=127.0.0.1
+listen-address=192.168.178.29
+bind-interfaces
+
+# Use open source DNS servers
+server=8.8.8.8
+server=8.8.4.4
+
+# Create custom 'domains'.
+# Custom 'domains' can also be added in /etc/hosts
+address=/nas.int.katzefudder.de/192.168.178.49
+address=/raspi.int.katzefudder.de/192.168.178.29
+address=/homebridge.int.katzefudder.de/192.168.178.49
+address=/fritz.int.katzefudder.de/192.168.178.1

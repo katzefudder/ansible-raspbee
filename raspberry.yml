@@ -3,6 +3,7 @@
   #vars_files:
   #  - "{{ vaultfile }}"
   become: yes
+  # see inventory for installing what package on what device
   roles:
     - basic
     - motd
@@ -12,4 +13,5 @@
     - nodejs
     - homebridge
     - graphite
+    - dnsmasq
     - nginx

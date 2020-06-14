@@ -1,0 +1,26 @@
+---
+
+- name: install dependencies
+  apt:
+    name: "dnsmasq"
+    state: "latest"
+    update_cache: true
+
+- name: update configuration file(s)
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: templates/dnsmasq.conf.j2
+      dest: /etc/dnsmasq.conf
+      validate: 'dnsmasq --test -C %s'
+  notify: restart dnsmasq
+
+- name: start and enable service
+  service:
+    name: dnsmasq
+    state: "started"
+    enabled: true
